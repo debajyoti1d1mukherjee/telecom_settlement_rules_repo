@@ -8,7 +8,6 @@ def start_crew(input_file_name: str):
     # Create an instance of SettlementCrew
     crew_instance = SettlementCrew()
 
-
     # Build input path
     script_dir = os.path.dirname(os.path.abspath(__file__))
     input_path = os.path.join(script_dir, "..", input_file_name)
