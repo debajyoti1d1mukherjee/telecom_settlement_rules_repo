@@ -148,8 +148,8 @@ generate_detailed_rating_rules_task:
     Example (assuming input had 'voice' and 'data' services, and the agent generated these specific rules):
     '```json
     {
-      "VOICE_LOCAL_DAYTIME_PREPAID_RULE": { /* ... detailed rule ... */ },
-      "DATA_TIERED_STANDARD_RULE": { /* ... detailed rule ... */ }
+      "VOICE_LOCAL_DAYTIME_PREPAID_RULE": ,
+      "DATA_TIERED_STANDARD_RULE": 
       // ... other services would have their own rule entries ...
     }
     ```
@@ -173,7 +173,7 @@ generate_drl_task:
       Assume a fact like 'UsageEvent' with fields like 'serviceType', 'direction', 'destination', 'eventTime', 'customerType', 'usageValue'.
       For 'time_band', create conditions to check if 'UsageEvent.eventTime' (assuming it's a DateTime or compatible type) falls within 'start_time' and 'end_time'. You might need helper functions or specific DRL syntax for time comparisons.
     - JSON 'rating_method':
-      - 'duration_based': The 'then' block should apply the 'rate.rate_per_unit' to the 'UsageEvent.usageValue' (e.g., duration in seconds). Consider 'rounding_policy'. Example: `RatedEvent ratedEvent = new RatedEvent(); ratedEvent.setCharge(usageEvent.getDuration() * {{rate_per_unit}}); insert(ratedEvent);`
+      - 'duration_based': The 'then' block should apply the 'rate.rate_per_unit' to the 'UsageEvent.usageValue' (e.g., duration in seconds). Consider 'rounding_policy'. Example: `RatedEvent ratedEvent = new RatedEvent(); ratedEvent.setCharge(usageEvent.getDuration() * rate_per_unit ); insert(ratedEvent);`
       - 'tier_based': The 'then' block should implement logic to iterate through 'tiers' (or use DRL constructs) and apply the correct 'rate_per_unit' based on 'UsageEvent.usageValue' (e.g., data in MB) falling within 'usage_from' and 'usage_to' of a tier. Example: `// logic to find matching tier and calculate charge`
       - 'revenue_share': The 'then' block should apply 'revenue_share_details.partner_share' and 'mno_share' to a relevant value from the 'UsageEvent' or context. Example: `// logic to calculate revenue share`
     The 'then' part of the DRL rule should typically create or modify facts (e.g., a 'RatedEvent' fact) or call global functions.
