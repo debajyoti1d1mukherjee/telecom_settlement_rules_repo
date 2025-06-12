@@ -5,6 +5,7 @@ def start_crew(input_file_name: str):
     """
     Sets up inputs using the provided input_file_name and kicks off the crew.
     """
+    
     # Create an instance of SettlementCrew
     crew_instance = SettlementCrew()
     # Build input path
