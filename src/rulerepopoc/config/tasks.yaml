@@ -1,0 +1,186 @@
+extract_and_map_from_json_task:
+  description: >
+    Analyze the provided JSON string: '{json_input_string}'. This JSON represents a telecom agreement.
+      Your primary goal is to extract details for each service defined under the 'agreement.services' path.
+      The keys within 'agreement.services' (e.g., 'voice', 'data', 'ott') are the service names.
+      For each service name you find:
+      1. Extract its 'type' and 'features' directly from 'agreement.services.<service_name>'.
+      2. Extract its 'monthly_recurring_charges' from 'agreement.commercials.monthly_recurring_charges.<service_name>'.
+      3. Extract its 'usage_charges' from 'agreement.commercials.usage_charges.<service_name>', if available for that service.
+      4. Include the general 'setup_fee' found at 'agreement.commercials.setup_fee'.
+      5. If the service is 'ott', also include its 'revenue_sharing' details from 'agreement.commercials.revenue_sharing.ott_services' as a field named 'revenue_sharing_details'.
+      Construct a new JSON object where each top-level key is a service name (e.g., 'voice', 'data', 'ott').
+      The value for each service key should be another JSON object containing all its extracted details:
+      'type', 'features', 'monthly_recurring_charges', 'usage_charges' (if applicable), 'setup_fee', and 'revenue_sharing_details' (for 'ott' only).
+      Ensure the output is a single, valid JSON string representing this new structure.
+  expected_output: |
+    A JSON string. This string represents a JSON object where keys are service names ('voice', 'data', 'ott')
+      extracted from 'agreement.services' in the input. Each service key maps to an object containing its
+      'type', 'features', 'monthly_recurring_charges', 'usage_charges' (if applicable), the general 'setup_fee',
+      and 'revenue_sharing_details' (specifically for 'ott').
+      Example based on typical input structure:
+      '```json
+      {
+        "voice": {
+          "type": "VoLTE, VoIP, Circuit-Switched Voice",
+          "features": ["Call Routing", "Number Translation", "Call Detail Records"],
+          "monthly_recurring_charges": "INR [X]/user/month",
+          "usage_charges": "INR [P]/min",
+          "setup_fee": "INR [Amount]"
+        },
+        "data": {
+          "type": "Mobile Internet (3G, 4G, 5G)",
+          "features": ["APN Configuration", "QoS Policies", "Data Volume Capping"],
+          "monthly_recurring_charges": "INR [Y]/GB or Unlimited plan",
+          "usage_charges": "INR [Q]/MB or bundle rates",
+          "setup_fee": "INR [Amount]"
+        },
+        "ott": {
+          "type": "Over-the-Top Application Enablement",
+          "features": ["IMS Integration", "Streaming Support", "Billing API Access"],
+          "monthly_recurring_charges": "Revenue share or flat fee",
+          "setup_fee": "INR [Amount]",
+          "revenue_sharing_details": "Partner 70%, MNO 30%"
+        }
+      }
+      ```
+    agent: json_telecom_extractor_agent # Corresponds to agent key in agents.yaml
+    async_execution: False
+
+read_file_task:
+  description: >
+    Read the content of the document specified by the file path: '{file_path}'.
+    Determine the file type from its extension and use the appropriate tool
+    (e.g., read_txt_file_tool for .txt, read_pdf_file_tool for .pdf, etc.)
+    to extract all text content.
+  expected_output: >
+    The full text content of the document as a single string.
+    If an error occurs (e.g. file not found, unsupported format),
+    return a descriptive error message.
+  agent: file_handler_agent # Corresponds to agent key in agents.yaml
+  human_input: False
+
+extract_entities_task:
+  description: >
+    Analyze the provided text content (output from the file reading task)
+    and extract telecom service information (voice, data, ott) into a
+    structured JSON format as per the agent's goal.
+    The text content will be passed as context from the previous task.
+  expected_output: |
+    A JSON string. This string represents a JSON object where keys are service names ('voice', 'data', 'ott')
+    extracted from 'agreement.services' in the input. Each service key maps to an object containing its
+    'type', 'features', 'monthly_recurring_charges', 'usage_charges' (if applicable), the general 'setup_fee',
+    and 'revenue_sharing_details' (specifically for 'ott').
+    Example based on typical input structure:
+    '```json
+    {
+      "voice": {
+        "type": "VoLTE, VoIP, Circuit-Switched Voice",
+        "features": ["Call Routing", "Number Translation", "Call Detail Records"],
+        "monthly_recurring_charges": "INR [X]/user/month",
+        "usage_charges": "INR [P]/min",
+        "setup_fee": "INR [Amount]"
+      },
+      "data": {
+        "type": "Mobile Internet (3G, 4G, 5G)",
+        "features": ["APN Configuration", "QoS Policies", "Data Volume Capping"],
+        "monthly_recurring_charges": "INR [Y]/GB or Unlimited plan",
+        "usage_charges": "INR [Q]/MB or bundle rates",
+        "setup_fee": "INR [Amount]"
+      },
+      "ott": {
+        "type": "Over-the-Top Application Enablement",
+        "features": ["IMS Integration", "Streaming Support", "Billing API Access"],
+        "monthly_recurring_charges": "Revenue share or flat fee",
+        "setup_fee": "INR [Amount]",
+        "revenue_sharing_details": "Partner 70%, MNO 30%"
+      }
+    }
+    ```
+  agent: entity_extractor_agent # Corresponds to agent key in agents.yaml
+  async_execution: False
+  context:
+    - read_file_task # Depends on the output of read_file_task
+
+generate_detailed_rating_rules_task:
+  description: >
+    Analyze the provided text content (output from extract_entities_task task). This JSON is the output of a previous task
+    and contains multiple telecom services as top-level keys (e.g., 'voice', 'data', 'ott'). Each service
+    key maps to an object with its commercial details, including fields like 'type', 'features',
+    'monthly_recurring_charges', 'usage_charges', 'setup_fee', and potentially 'revenue_sharing_details' (for 'ott').
+
+    Your goal is to transform this input into a new JSON structure containing detailed rating rules.
+    For EACH service found in the input (e.g., 'voice', 'data', 'ott'), you must create a corresponding
+    detailed rating rule JSON object.
+
+    For each service, construct its rating rule object with the following considerations:
+    1.  'rule_id': Generate a descriptive and unique ID (e.g., 'VOICE_OUTGOING_LOCAL_DAYTIME_RULE', 'DATA_PREPAID_TIER_RULE').
+        This ID should reflect the service and key characteristics of the rule you are creating.
+    2.  'service_type': The original name of the service (e.g., 'voice', 'data').
+    3.  'direction': Infer or default (e.g., 'outgoing', 'incoming', 'any').
+    4.  'destination': Infer or default (e.g., 'local', 'national', 'international', 'onnet', 'offnet').
+    5.  'time_band': If applicable, define a time band with 'start_time', 'end_time', 'timezone'. Use common defaults if not inferable.
+    6.  'criteria': Define any applicable criteria, e.g., 'customer_type': 'prepaid'/'postpaid', 'caller_type', 'callee_network'.
+    7.  'rating_method': Infer this (e.g., 'duration_based', 'volume_based', 'tier_based', 'event_based', 'fixed_fee').
+        - If 'usage_charges' suggests per-unit charging (e.g., "INR [P]/min", "INR [Q]/MB"), infer 'duration_based' or 'volume_based'.
+        - If 'usage_charges' suggests "bundle rates" or tiered structures are implied by the service type (e.g. data plans), infer 'tier_based'.
+        - If only 'monthly_recurring_charges' are significant, it might be 'fixed_fee' or part of a bundle.
+    8.  'unit': Infer the unit for rating (e.g., 'second', 'minute', 'MB', 'GB', 'event').
+    9.  'rounding_policy': Define a 'rounding_unit' and 'rounding_method' (e.g., 'ceiling', 'floor', 'nearest').
+    10. 'rate' (for flat rates) or 'tiers' (for tiered rates):
+        - For 'duration_based' or 'volume_based': Extract/define 'currency' and 'rate_per_unit'. Parse numeric values from strings like "INR 0.01/min".
+        - For 'tier_based': Define a list of 'tiers', each with 'tier_id', 'usage_from', 'usage_to', 'rate_per_unit', 'currency'.
+          You might need to create plausible tiers if only a general "bundle rate" is mentioned.
+    11. 'validity': Define 'start_date' and 'end_date'. Use sensible defaults or placeholders like "YYYY-MM-DD".
+    12. 'priority': Assign a numeric priority.
+    13. 'fallback_rule_id': If applicable, specify a fallback rule ID.
+
+    The final output of this task should be a single JSON string. This string should represent a JSON object
+    where each key is the generated 'rule_id' for a service, and its value is the newly constructed,
+    detailed rating rule object for that service. Strive to make the rules as complete and realistic as possible
+    based on common telecom practices, even if some details need to be inferred.
+  expected_output: |
+    A single JSON string. This string represents a JSON object where each key is a uniquely generated,
+    descriptive 'rule_id' (e.g., 'VOICE_LOCAL_DAYTIME_PREPAID_RULE', 'DATA_TIERED_STANDARD_RULE').
+    Each 'rule_id' maps to a detailed rating rule JSON object constructed for the corresponding service,
+    incorporating inferred and common telecom parameters.
+
+    Example (assuming input had 'voice' and 'data' services, and the agent generated these specific rules):
+    '```json
+    {
+      "VOICE_LOCAL_DAYTIME_PREPAID_RULE": { /* ... detailed rule ... */ },
+      "DATA_TIERED_STANDARD_RULE": { /* ... detailed rule ... */ }
+      // ... other services would have their own rule entries ...
+    }
+    ```
+  agent: advanced_rating_rule_creator_agent # Corresponds to agent key in agents.yaml
+  async_execution: False
+  context:
+    - extract_entities_task # Depends on the output of extract_entities_task
+
+generate_drl_task:
+  description: >
+    Analyze the provided text content (output from generate_detailed_rating_rules_task task) which contains telecom rating rules.
+    First, parse this JSON string into a structured Python dictionary or list of dictionaries.
+    Then, for each rule defined in the JSON, generate a corresponding Drools DRL rule.
+    The DRL file should start with a package declaration (e.g., 'package com.telecom.rating;')
+    and any necessary imports for facts (e.g., 'import com.telecom.UsageEvent; import com.telecom.RatedEvent;').
+    Mapping guidelines:
+    - JSON 'rule_id' -> DRL rule name (e.g., rule "VOICE_OUTGOING_LOCAL_DAYTIME_RULE").
+    - JSON 'priority' -> DRL 'salience' attribute.
+    - JSON 'validity' ('start_date', 'end_date') -> DRL 'date-effective' and 'date-expires' attributes (format as 'dd-MMM-yyyy', e.g., '01-Jan-2024').
+    - JSON 'service_type', 'direction', 'destination', 'time_band', 'criteria' -> DRL 'when' conditions.
+      Assume a fact like 'UsageEvent' with fields like 'serviceType', 'direction', 'destination', 'eventTime', 'customerType', 'usageValue'.
+      For 'time_band', create conditions to check if 'UsageEvent.eventTime' (assuming it's a DateTime or compatible type) falls within 'start_time' and 'end_time'. You might need helper functions or specific DRL syntax for time comparisons.
+    - JSON 'rating_method':
+      - 'duration_based': The 'then' block should apply the 'rate.rate_per_unit' to the 'UsageEvent.usageValue' (e.g., duration in seconds). Consider 'rounding_policy'. Example: `RatedEvent ratedEvent = new RatedEvent(); ratedEvent.setCharge(usageEvent.getDuration() * {{rate_per_unit}}); insert(ratedEvent);`
+      - 'tier_based': The 'then' block should implement logic to iterate through 'tiers' (or use DRL constructs) and apply the correct 'rate_per_unit' based on 'UsageEvent.usageValue' (e.g., data in MB) falling within 'usage_from' and 'usage_to' of a tier. Example: `// logic to find matching tier and calculate charge`
+      - 'revenue_share': The 'then' block should apply 'revenue_share_details.partner_share' and 'mno_share' to a relevant value from the 'UsageEvent' or context. Example: `// logic to calculate revenue share`
+    The 'then' part of the DRL rule should typically create or modify facts (e.g., a 'RatedEvent' fact) or call global functions.
+    Ensure the generated DRL is syntactically correct. Handle different rule structures present in the input JSON.
+    Refer to the provided sample JSON for the structure of rating rules. The DRL should be functional and reflect the logic of the JSON rules.
+  expected_output: A single string containing the complete DRL file content, including package, imports, and all generated rules.
+  agent: drl_generator_agent # Corresponds to agent key in agents.yaml
+  async_execution: False
+  context:
+    - generate_detailed_rating_rules_task # Depends on the output of generate_detailed_rating_rules_task

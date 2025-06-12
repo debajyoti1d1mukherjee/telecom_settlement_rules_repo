@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: rulerepopoc
+Version: 0.1.0
+Summary: Rule repository for telecom settlement
+Author-email: Debu <you@example.com>
+Requires-Python: <3.12,>=3.11
+Requires-Dist: python-dotenv
+Requires-Dist: crewai==0.108.0
+Requires-Dist: crewai-tools==0.38.1
+Requires-Dist: ipython==9.0.2
+Requires-Dist: pandas>=2.2.2
+Requires-Dist: openpyxl>=3.1.2
+Requires-Dist: PyPDF2>=3.0.1

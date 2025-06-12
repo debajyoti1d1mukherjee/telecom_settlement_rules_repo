@@ -1,0 +1,19 @@
+[project]
+name = "rulerepopoc"
+version = "0.1.0"
+description = "Rule repository for telecom settlement"
+authors = [{ name = "Debu", email = "you@example.com" }]
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "python-dotenv",
+    "crewai==0.108.0",
+    "crewai-tools==0.38.1",
+    "ipython==9.0.2",
+    "pandas>=2.2.2",
+    "openpyxl>=3.1.2",
+    "PyPDF2>=3.0.1"
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"

@@ -1,0 +1,12 @@
+README.md
+pyproject.toml
+src/rulerepopoc/__init__.py
+src/rulerepopoc/crew.py
+src/rulerepopoc/main.py
+src/rulerepopoc.egg-info/PKG-INFO
+src/rulerepopoc.egg-info/SOURCES.txt
+src/rulerepopoc.egg-info/dependency_links.txt
+src/rulerepopoc.egg-info/requires.txt
+src/rulerepopoc.egg-info/top_level.txt
+src/rulerepopoc/tools/__init__.py
+src/rulerepopoc/tools/customtools.py
