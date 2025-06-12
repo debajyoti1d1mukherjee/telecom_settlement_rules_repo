@@ -38,7 +38,6 @@ class SettlementCrew():
                    FileReadingToolkit.read_xlsx_file_tool],
 			verbose=True,
 			memory=False,
-            #llm=self.llm
             )
 
     @agent
@@ -48,7 +47,6 @@ class SettlementCrew():
 			# No tools specified for this agent in agents.yaml
 			verbose=True,
 			memory=False,
-            #llm=self.llm
 		)
 
     @agent
@@ -58,7 +56,6 @@ class SettlementCrew():
 			# No tools specified for this agent in agents.yaml
 			verbose=True,
 			memory=False,
-            #llm=self.llm
 		)
 
     @agent
@@ -68,7 +65,6 @@ class SettlementCrew():
 			# No tools specified for this agent in agents.yaml
 			verbose=True,
 			memory=False,
-            #llm=self.llm
         )
 
     @task
