@@ -1,6 +1,6 @@
 extract_and_map_from_json_task:
   description: >
-    Analyze the provided JSON string: '{json_input_string}'. This JSON represents a telecom agreement.
+    Analyze the provided JSON string: 'json_input_string'. This JSON represents a telecom agreement.
       Your primary goal is to extract details for each service defined under the 'agreement.services' path.
       The keys within 'agreement.services' (e.g., 'voice', 'data', 'ott') are the service names.
       For each service name you find:
