@@ -2,9 +2,9 @@ llm:
   provider: openai
   model: meta-llama/llama-4-scout-17b-16e-instruct
   base_url: https://api.groq.com/openai/v1
-  api_key: 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
-  OPENAI_API_KEY: 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
+  api_key: ${GROQ_API_KEY}
 
 environment:
-  - name: OPENAI_API_KEY
+  - name: GROQ_API_KEY
     value: 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
+
