@@ -1,6 +1,7 @@
 import sys
 # Import the globally instantiated crew object from crew.py
-from crew import SettlementCrew
+from rulerepopoc.crew import crew # Changed to import the globally instantiated crew
+
 import os
 
 def run():
@@ -14,6 +15,6 @@ def run():
     inputs = {'file_path': os.path.join(script_dir, "..", file_name)} # Assuming main.py is in src/rulerepopoc and file is in src/
 
     print(f"\nKicking off the crew from main.py with input file: {inputs['file_path']}...\n")
-    result = SettlementCrew.crew().kickoff(inputs=inputs)
+    result = crew.kickoff(inputs=inputs) # Use the imported crew instance directly
     print("\nCrew execution finished. Result:")
     print(result)

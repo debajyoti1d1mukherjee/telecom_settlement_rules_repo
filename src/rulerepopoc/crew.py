@@ -2,11 +2,11 @@ from dotenv import load_dotenv
 from crewai import Crew, Process, Agent, Task, LLM
 import os
 from crewai.project import CrewBase, agent, task, crew as crew_decorator
-from tools.customtools import FileReadingToolkit
+from rulerepopoc.tools.customtools import FileReadingToolkit
 from dotenv import load_dotenv
 
 llm = LLM(
-    model="meta-llama/llama-4-scout-17b-16e-instruct", # Replace with your preferred model
+    model="meta-llama/llama-4-scout-17b-16e-instruct", 
     base_url="https://api.groq.com/openai/v1",
     api_key= "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",    
     timeout= 1000
