@@ -18,8 +18,17 @@ class SettlementCrew():
     agents_config = 'config/agents.yaml'
     tasks_config = 'config/tasks.yaml'
     
-
     load_dotenv()
+
+    inputs = {
+        'path': {
+            'type': 'text',
+            'label': 'Plan File',
+            'description': 'Provide Plan File',
+            'required': True
+        }
+    }
+
     @agent
     def file_handler_agent(self) -> Agent:
         return Agent(
