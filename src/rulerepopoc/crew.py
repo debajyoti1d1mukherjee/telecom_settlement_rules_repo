@@ -21,7 +21,7 @@ class SettlementCrew():
     load_dotenv()
 
     inputs = {
-        'path': {
+        'file': {
             'type': 'text',
             'label': 'Plan File',
             'description': 'Provide Plan File',
@@ -126,8 +126,17 @@ class SettlementCrew():
 			tasks=self.tasks, # Automatically created by the @task decorator
 			process=Process.sequential,
 			verbose=True,
-            inputs=self.inputs,
+            #inputs=self.inputs,
+            inputs={
+                'path': {
+                    'type': 'text',
+                    'label': 'Plan File',
+                    'description': 'Provide the path to the input plan file',
+                    'required': True
+                }
+            }
 		)
+    
 
 # This is the global `crew` instance that `crewai run crew` would look for.
 # It's also what your `if __name__ == "__main__":` block should use.
