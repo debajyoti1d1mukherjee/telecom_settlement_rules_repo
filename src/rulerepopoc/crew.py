@@ -126,6 +126,7 @@ class SettlementCrew():
 			tasks=self.tasks, # Automatically created by the @task decorator
 			process=Process.sequential,
 			verbose=True,
+            inputs=self.inputs,
 		)
 
 # This is the global `crew` instance that `crewai run crew` would look for.
