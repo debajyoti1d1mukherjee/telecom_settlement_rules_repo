@@ -1,7 +1,7 @@
 import os
 from rulerepopoc.crew import SettlementCrew  # make sure this path is correct
 
-def run(input_file_name: str):
+def start_crew(input_file_name: str):
     """
     Sets up inputs using the provided input_file_name and kicks off the crew.
     """
