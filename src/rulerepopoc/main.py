@@ -11,9 +11,9 @@ def start_crew(input_file_name: str):
     # Build input path
     script_dir = os.path.dirname(os.path.abspath(__file__))
     input_path = os.path.join(script_dir, "..", input_file_name)
-    inputs = {'file_path': input_path}
+    inputs = {'path': input_path} # Changed key to 'path'
 
-    print(f"\nKicking off the crew with input file: {inputs['file_path']}...\n")
+    print(f"\nKicking off the crew with input file: {inputs['path']}...\n")
     
     result = crew_instance.crew().kickoff(inputs=inputs)
     
