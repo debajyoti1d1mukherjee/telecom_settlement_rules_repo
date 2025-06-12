@@ -19,7 +19,7 @@ class SettlementCrew():
     tasks_config = 'config/tasks.yaml'
     
     load_dotenv()
-    os.environ["OPENAI_API_KEY"] = "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"
+    os.environ["GROQ_API_KEY"] = "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"
 
     inputs = {
         'file': {
