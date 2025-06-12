@@ -20,6 +20,9 @@ class SettlementCrew():
     
     load_dotenv()
     os.environ["GROQ_API_KEY"] = "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"
+    os.environ["LITELLM_PROVIDER"] = "groq"
+    os.environ["LITELLM_MODEL"] = "meta-llama/llama-4-scout-17b-16e-instruct"
+
 
     inputs = {
         'file': {
