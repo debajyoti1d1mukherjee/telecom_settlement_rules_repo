@@ -1,11 +1,4 @@
 # c:\Users\006572744\Box\Tutorial-2024\AI\telecom_settlement_rules_repo\rulerepopoc\src\rulerepopoc\config\agents.yaml
-llm:
-  model: "meta-llama/llama-4-scout-17b-16e-instruct"
-  base_url: "https://api.groq.com/openai/v1"
-  api_key: "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" # Consider using an environment variable for the API key
-  timeout: 1000
-
-
 json_telecom_extractor_agent:
   role: 'Telecom JSON Data Processor'
   goal: >

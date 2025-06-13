@@ -5,25 +5,13 @@ from crewai.project import CrewBase, agent, task, crew as crew_decorator
 from rulerepopoc.tools.customtools import FileReadingToolkit
 from dotenv import load_dotenv
 
-llm = LLM(
-    model="meta-llama/llama-4-scout-17b-16e-instruct", 
-    base_url="https://api.groq.com/openai/v1",
-    api_key= "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",    
-    timeout= 1000
-)
 
 @CrewBase
 class SettlementCrew():
     """Settlement crew definition relying on YAML configurations for agents and tasks."""
     agents_config = 'config/agents.yaml'
     tasks_config = 'config/tasks.yaml'
-    
-    load_dotenv()
-    os.environ["GROQ_API_KEY"] = "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"
-    os.environ["LITELLM_PROVIDER"] = "groq"
-    os.environ["LITELLM_MODEL"] = "meta-llama/llama-4-scout-17b-16e-instruct"
-
-
+       
     inputs = {
         'file': {
             'type': 'text',
