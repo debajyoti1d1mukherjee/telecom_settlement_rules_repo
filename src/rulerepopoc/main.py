@@ -19,7 +19,8 @@ def run(inputs: dict):
 
     print(f"\n Running Crew with file: {full_path}\n")
     crew_instance = SettlementCrew()
-    result = crew_instance.crew().kickoff(inputs={"file_path": full_path})
+    #result = crew_instance.crew().kickoff(inputs={"file_path": full_path})
+    result = crew_instance.crew().kickoff(inputs={"file_path": file_path})
     
     print("\nCrew run finished. Result:")
     print(result)
