@@ -20,8 +20,8 @@ json_telecom_extractor_agent:
     service name is a key, and its commercial details form the value (as an object).
   verbose: True
   allow_delegation: False
-  llm:
-    provider: groq
+  llm: 
+    provider: Groq
     config:
       model: meta-llama/llama-4-scout-17b-16e-instruct # Could be different, e.g., 'gpt-4o' for this specific agent
       base_url: https://api.groq.com/openai/v1
@@ -38,7 +38,7 @@ file_handler_agent:
   verbose: True
   allow_delegation: False
   llm:
-    provider: groq
+    provider: Groq
     config:
       model: meta-llama/llama-4-scout-17b-16e-instruct # Could be different, e.g., 'gpt-4o' for this specific agent
       base_url: https://api.groq.com/openai/v1
@@ -63,7 +63,7 @@ entity_extractor_agent:
   verbose: True
   allow_delegation: False
   llm:
-    provider: groq
+    provider: Groq
     config:
       model: meta-llama/llama-4-scout-17b-16e-instruct # Could be different, e.g., 'gpt-4o' for this specific agent
       base_url: https://api.groq.com/openai/v1
@@ -84,7 +84,7 @@ advanced_rating_rule_creator_agent:
   verbose: True
   allow_delegation: False
   llm:
-    provider: groq
+    provider: Groq
     config:
       model: meta-llama/llama-4-scout-17b-16e-instruct # Could be different, e.g., 'gpt-4o' for this specific agent
       base_url: https://api.groq.com/openai/v1
@@ -106,7 +106,7 @@ drl_generator_agent:
   verbose: True
   allow_delegation: False
   llm:
-    provider: groq
+    provider: Groq
     config:
       model: meta-llama/llama-4-scout-17b-16e-instruct # Could be different, e.g., 'gpt-4o' for this specific agent
       base_url: https://api.groq.com/openai/v1
