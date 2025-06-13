@@ -24,7 +24,7 @@ json_telecom_extractor_agent:
   # Use the same LLM configuration as above
     provider: openai
       config:
-        model: gpt-4o
+        model: meta-llama/llama-4-scout-17b-16e-instruct
         api_key: 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
 
 file_handler_agent:
@@ -40,7 +40,7 @@ file_handler_agent:
   llm:
     provider: openai
       config:
-        model: gpt-4o
+        model: meta-llama/llama-4-scout-17b-16e-instruct
         api_key: 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
 
 entity_extractor_agent:
@@ -64,7 +64,7 @@ entity_extractor_agent:
   llm:
     provider: openai
       config:
-        model: gpt-4o
+        model: meta-llama/llama-4-scout-17b-16e-instruct
         api_key: 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
 
 advanced_rating_rule_creator_agent:
@@ -84,7 +84,7 @@ advanced_rating_rule_creator_agent:
   llm:
     provider: openai
       config:
-        model: gpt-4o
+        model: meta-llama/llama-4-scout-17b-16e-instruct
         api_key: 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
 
 drl_generator_agent:
@@ -105,5 +105,5 @@ drl_generator_agent:
   llm:
     provider: openai
       config:
-        model: gpt-4o
+        model: meta-llama/llama-4-scout-17b-16e-instruct
         api_key: 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
