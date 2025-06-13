@@ -20,12 +20,7 @@ json_telecom_extractor_agent:
     service name is a key, and its commercial details form the value (as an object).
   verbose: True
   allow_delegation: False
-  llm: 
-    provider: Groq
-    config:
-      model: meta-llama/llama-4-scout-17b-16e-instruct # Could be different, e.g., 'gpt-4o' for this specific agent
-      base_url: https://api.groq.com/openai/v1
-      api_key: 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
+  llm: groq/llama-3.2-90b-text-preview
 
 file_handler_agent:
   role: 'Document File Handler Specialist'
@@ -37,12 +32,7 @@ file_handler_agent:
     document formats and returning their complete textual content.
   verbose: True
   allow_delegation: False
-  llm:
-    provider: Groq
-    config:
-      model: meta-llama/llama-4-scout-17b-16e-instruct # Could be different, e.g., 'gpt-4o' for this specific agent
-      base_url: https://api.groq.com/openai/v1
-      api_key: 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
+  llm: groq/llama-3.2-90b-text-preview
 
 entity_extractor_agent:
   role: 'Telecom Commercial Information Extractor'
@@ -62,12 +52,7 @@ entity_extractor_agent:
     'Monthly Recurring Charges', etc.
   verbose: True
   allow_delegation: False
-  llm:
-    provider: Groq
-    config:
-      model: meta-llama/llama-4-scout-17b-16e-instruct # Could be different, e.g., 'gpt-4o' for this specific agent
-      base_url: https://api.groq.com/openai/v1
-      api_key: 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
+  llm: groq/llama-3.2-90b-text-preview
 
 advanced_rating_rule_creator_agent:
   role: 'Telecom Rating Rule JSON Processor'
@@ -83,12 +68,7 @@ advanced_rating_rule_creator_agent:
     information clearly and concisely in a structured JSON output.
   verbose: True
   allow_delegation: False
-  llm:
-    provider: Groq
-    config:
-      model: meta-llama/llama-4-scout-17b-16e-instruct # Could be different, e.g., 'gpt-4o' for this specific agent
-      base_url: https://api.groq.com/openai/v1
-      api_key: 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
+  llm: groq/llama-3.2-90b-text-preview
 
 drl_generator_agent:
   role: 'Drools DRL Generation Expert'
@@ -105,9 +85,4 @@ drl_generator_agent:
     The 'then' block should conceptually represent the rating action based on the rule's purpose (e.g., applying a rate, calculating a share).
   verbose: True
   allow_delegation: False
-  llm:
-    provider: Groq
-    config:
-      model: meta-llama/llama-4-scout-17b-16e-instruct # Could be different, e.g., 'gpt-4o' for this specific agent
-      base_url: https://api.groq.com/openai/v1
-      api_key: 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
+  llm: groq/llama-3.2-90b-text-preview
