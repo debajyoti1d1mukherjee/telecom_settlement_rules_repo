@@ -1,24 +1,30 @@
 import os
-from rulerepopoc.crew import SettlementCrew  # make sure this path is correct
+from rulerepopoc.crew import SettlementCrew
 
-def start_crew(file_path: str):
+def run(inputs: dict):
     """
-    Sets up inputs using the provided input_file_name and kicks off the crew.
+    Entrypoint for CrewAI CLI and Cloud.
+    Expects `inputs` to include a "file_path" string.
     """
+    file_path = inputs.get("file_path")
+    if not isinstance(file_path, str) or not file_path.strip():
+        raise ValueError(f"Invalid or missing 'file_path' input: {file_path!r}")
+
+    # Resolve the path relative to this script
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    full_path = os.path.normpath(os.path.join(base_dir, "..", file_path))
     
-    # Create an instance of SettlementCrew
+    if not os.path.isfile(full_path):
+        raise FileNotFoundError(f"File not found at provided path: {full_path}")
+
+    print(f"\n Running Crew with file: {full_path}\n")
     crew_instance = SettlementCrew()
-    # Build input path
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(script_dir, "..", file_path)
-    inputs = {'file_path': file_path} # Changed key to 'path'
-
-    print(f"\nKicking off the crew with input file: {inputs['file_path']}...\n")
+    result = crew_instance.crew().kickoff(inputs={"file_path": full_path})
     
-    result = crew_instance.crew().kickoff(inputs=inputs)
-    
-    print("\nCrew execution finished. Result:")
+    print("\nCrew run finished. Result:")
     print(result)
+    return result
 
- #if __name__ == "__main__":
-     #run("MNO_MVNO_Tiered_Agreement.docx")  # Or replace with dynamic value
+if __name__ == "__main__":
+    # Local test — replace with a real file path
+    run({"file_path": "MNO_MVNO_Tiered_Agreement.docx"})
