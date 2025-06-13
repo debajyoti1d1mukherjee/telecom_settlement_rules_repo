@@ -13,10 +13,10 @@ class SettlementCrew():
     tasks_config = 'config/tasks.yaml'
        
     inputs = {
-        'file': {
+        'path': {  # Changed 'file' to 'path' for consistency
             'type': 'text',
             'label': 'Plan File',
-            'description': 'Provide Plan File',
+            'description': 'Provide the path to the input plan file',
             'required': True
         }
     }
@@ -134,8 +134,8 @@ crew = crew_instance_builder.crew()
 if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     file_name = "MNO_MVNO_Tiered_Agreement.docx"
-    inputs = {'file_path': os.path.join(script_dir, file_name)}
+    inputs = {'path': os.path.join(script_dir, file_name)} # Changed 'file_path' to 'path'
 
-    print(f"\nKicking off the crew with input file: {inputs['file_path']}...\n")
+    print(f"\nKicking off the crew with input file: {inputs['path']}...\n")
     crew_result = crew.kickoff(inputs=inputs) # Call kickoff on the Crew instance
     print(crew_result)

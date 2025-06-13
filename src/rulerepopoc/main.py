@@ -1,7 +1,7 @@
 import os
 from rulerepopoc.crew import SettlementCrew  # make sure this path is correct
 
-def start_crew(input_file_name: str):
+def start_crew(file_path: str):
     """
     Sets up inputs using the provided input_file_name and kicks off the crew.
     """
@@ -10,10 +10,10 @@ def start_crew(input_file_name: str):
     crew_instance = SettlementCrew()
     # Build input path
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    input_path = os.path.join(script_dir, "..", input_file_name)
-    inputs = {'path': input_path} # Changed key to 'path'
+    file_path = os.path.join(script_dir, "..", file_path)
+    inputs = {'file_path': file_path} # Changed key to 'path'
 
-    print(f"\nKicking off the crew with input file: {inputs['path']}...\n")
+    print(f"\nKicking off the crew with input file: {inputs['file_path']}...\n")
     
     result = crew_instance.crew().kickoff(inputs=inputs)
     
