@@ -1,5 +1,5 @@
 from crewai.tools import tool
-
+import os
 
 # Attempt to import necessary libraries, providing guidance if they are missing.
 try:
@@ -18,6 +18,8 @@ class FileReadingToolkit():
     def read_txt_file_tool(file_path: str) -> str:
         """Reads a .txt file and returns its content as a string."""
         try:
+            print(f"Reading TXT file:::::::::::::::::::::::::::::::::::: {file_path}")
+ 
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             return content
@@ -30,6 +32,9 @@ class FileReadingToolkit():
         """Reads a .docx file and returns its text content as a string."""
         try:
             from docx import Document
+            print(f"Reading DOCX file:::::::::::::::::::::::::::::::::::: {file_path}")
+            print("Exists:", os.path.isfile(file_path))
+            print("Abspath:", os.path.abspath(file_path))
             doc = Document(file_path)
             full_text = [para.text for para in doc.paragraphs]
             return "\n".join(full_text)
@@ -44,6 +49,7 @@ class FileReadingToolkit():
         """Reads an .xlsx file and returns content from all sheets as a string."""
         try:
             import pandas as pd
+            print(f"Reading DOCX file:::::::::::::::::::::::::::::::::::: {file_path}")
             xls = pd.ExcelFile(file_path)
             content = []
             for sheet_name in xls.sheet_names:
@@ -63,6 +69,7 @@ class FileReadingToolkit():
         """Reads a .pdf file and returns its text content as a string."""
         try:
             from PyPDF2 import PdfReader
+            print(f"Reading DOCX file:::::::::::::::::::::::::::::::::::: {file_path}")
             reader = PdfReader(file_path)
             text = ""
             for page in reader.pages:
