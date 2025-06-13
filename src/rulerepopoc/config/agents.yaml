@@ -23,9 +23,9 @@ json_telecom_extractor_agent:
   llm: 
   # Use the same LLM configuration as above
     provider: openai
-      config:
-        model: meta-llama/llama-4-scout-17b-16e-instruct
-        api_key: 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
+    config:
+      model: meta-llama/llama-4-scout-17b-16e-instruct
+      api_key: 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
 
 file_handler_agent:
   role: 'Document File Handler Specialist'
@@ -39,9 +39,9 @@ file_handler_agent:
   allow_delegation: False
   llm:
     provider: openai
-      config:
-        model: meta-llama/llama-4-scout-17b-16e-instruct
-        api_key: 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
+    config:
+      model: meta-llama/llama-4-scout-17b-16e-instruct
+      api_key: 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
 
 entity_extractor_agent:
   role: 'Telecom Commercial Information Extractor'
@@ -63,9 +63,9 @@ entity_extractor_agent:
   allow_delegation: False
   llm:
     provider: openai
-      config:
-        model: meta-llama/llama-4-scout-17b-16e-instruct
-        api_key: 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
+    config:
+      model: meta-llama/llama-4-scout-17b-16e-instruct
+      api_key: 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
 
 advanced_rating_rule_creator_agent:
   role: 'Telecom Rating Rule JSON Processor'
@@ -83,9 +83,9 @@ advanced_rating_rule_creator_agent:
   allow_delegation: False
   llm:
     provider: openai
-      config:
-        model: meta-llama/llama-4-scout-17b-16e-instruct
-        api_key: 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
+    config:
+      model: meta-llama/llama-4-scout-17b-16e-instruct
+      api_key: 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
 
 drl_generator_agent:
   role: 'Drools DRL Generation Expert'
@@ -104,6 +104,6 @@ drl_generator_agent:
   allow_delegation: False
   llm:
     provider: openai
-      config:
-        model: meta-llama/llama-4-scout-17b-16e-instruct
-        api_key: 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
+    config:
+      model: meta-llama/llama-4-scout-17b-16e-instruct
+      api_key: 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
