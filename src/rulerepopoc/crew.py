@@ -1,10 +1,10 @@
 from dotenv import load_dotenv
-from crewai import Crew, Process, Agent, Task, LLM
+from crewai import Crew, Process, Agent, Task
 import os
 from crewai.project import CrewBase, agent, task, crew as crew_decorator
 from rulerepopoc.tools.customtools import FileReadingToolkit
 from dotenv import load_dotenv
-
+load_dotenv()
 
 @CrewBase
 class SettlementCrew():
