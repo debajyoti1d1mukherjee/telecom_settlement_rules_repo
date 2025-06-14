@@ -18,5 +18,5 @@ dependencies = [
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
-[project.scripts]
-run_crew = "rulerepopoc.main:start_crew"
+[project.scripts] # Corrected the script entry point to use the 'run' function
+run_crew = "rulerepopoc.main:run"

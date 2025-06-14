@@ -49,7 +49,7 @@ extract_and_map_from_json_task:
 
 read_file_task:
   description: >
-    Read the content of the document specified by the file path: '{file_path}'.
+    Read the content of the document specified .The exact, complete, and absolute file path for the document is: '{file_path}'
     Determine the file type from its extension and use the appropriate tool
     (e.g., read_txt_file_tool for .txt, read_pdf_file_tool for .pdf, etc.)
     to extract all text content.
