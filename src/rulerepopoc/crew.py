@@ -13,7 +13,7 @@ class SettlementCrew():
     tasks_config = 'config/tasks.yaml'
        
     inputs = {
-        'path': {  # Changed 'file' to 'path' for consistency
+        'file_path': {  # Changed from 'path' to 'file_path' to match task expectation
             'type': 'text',
             'label': 'Plan File',
             'description': 'Provide the path to the input plan file',
@@ -115,8 +115,8 @@ class SettlementCrew():
 			process=Process.sequential,
 			verbose=True,
             #inputs=self.inputs,
-            inputs={
-                'path': {
+            inputs={ # This is the active inputs definition for the Crew object
+                'file_path': { # Changed from 'path' to 'file_path'
                     'type': 'text',
                     'label': 'Plan File',
                     'description': 'Provide the path to the input plan file',
@@ -133,9 +133,10 @@ crew = crew_instance_builder.crew()
  
 if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    file_name = "MNO_MVNO_Tiered_Agreement.docx"
-    inputs = {'path': os.path.join(script_dir, file_name)} # Changed 'file_path' to 'path'
+    print(f"Script directory: {script_dir}")
+    file_name = "Settlement RFP_Skeleton.xlsx"
+    inputs = {'file_path': os.path.join(script_dir, file_name)} # Changed key to file_path
 
-    print(f"\nKicking off the crew with input file: {inputs['path']}...\n")
+    print(f"\nKicking off the crew with input file: {inputs['file_path']}...\n") # Changed key to file_path
     crew_result = crew.kickoff(inputs=inputs) # Call kickoff on the Crew instance
     print(crew_result)
