@@ -17,6 +17,7 @@ class FileReadingToolkit:
         """Reads a .docx file and returns its text content as a string."""
         try:
             from docx import Document
+            print(f"****************************************Reading DOCX file: {file_path}")
             doc = Document(file_path)
             full_text = [para.text for para in doc.paragraphs]
             return "\n".join(full_text)
@@ -32,6 +33,7 @@ class FileReadingToolkit:
             import pandas as pd
             xls = pd.ExcelFile(file_path)
             content = []
+            print(f"****************************************Reading XLSX file: {file_path}")
             for sheet_name in xls.sheet_names:
                 df = pd.read_excel(xls, sheet_name=sheet_name, header=None) # Read without assuming headers
                 # Convert entire sheet to string, trying to capture all data

@@ -1,5 +1,5 @@
 import os
-from rulerepopoc.crew import SettlementCrew
+from crew import SettlementCrew
 
 def run(inputs: dict):
     """
@@ -12,15 +12,17 @@ def run(inputs: dict):
 
     # Resolve the path relative to this script
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    full_path = os.path.normpath(os.path.join(base_dir, "..", file_path))
+    #full_path = os.path.normpath(os.path.join(base_dir, "..", file_path))
+    full_path = os.path.normpath(os.path.join(base_dir,  file_path))
+    print(f"base_dir::::::::::::::::::::::::::::: {base_dir}")
+    print(f"full_path::::::::::::::::::::::::::::: {full_path}")
     
     if not os.path.isfile(full_path):
         raise FileNotFoundError(f"File not found at provided path: {full_path}")
 
-    print(f"\n Running Crew with file: {full_path}\n")
+    print(f"\n*************************** Running Crew with file: {full_path}\n")
     crew_instance = SettlementCrew()
-    #result = crew_instance.crew().kickoff(inputs={"file_path": full_path})
-    result = crew_instance.crew().kickoff(inputs={"file_path": file_path})
+    result = crew_instance.crew().kickoff(inputs={"file_path": full_path})
     
     print("\nCrew run finished. Result:")
     print(result)
