@@ -4,7 +4,7 @@ llm:
   config:
     model: meta-llama/llama-4-scout-17b-16e-instruct
     base_url: https://api.groq.com/openai/v1
-    api_key: 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
+    api_key: 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
 
 
 json_telecom_extractor_agent:
